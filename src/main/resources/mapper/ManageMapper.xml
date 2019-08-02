@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.hello.mapper.ManageMapper">
+    <resultMap id="BaseResultMap" type="com.example.springboot.hello.entity.Manage">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM `manage` WHERE id = #{id}
+    </select>
+</mapper>

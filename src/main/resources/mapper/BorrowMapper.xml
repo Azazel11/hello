@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.hello.mapper.BorrowMapper">
+    <resultMap id="BaseResultMap" type="com.example.springboot.hello.entity.Borrow">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uId" jdbcType="INTEGER" property="uId" />
+        <result column="uName" jdbcType="VARCHAR" property="uName"/>
+        <result column="bId" jdbcType="INTEGER" property="bId"/>
+        <result column="bName" jdbcType="VARCHAR" property="bName"/>
+        <result column="borrowDate" jdbcType="VARCHAR" property="borrowDate"/>
+        <result column="returnDate" jdbcType="VARCHAR" property="returnDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+       id,uId,uName,bId,bName,borrowDate,returnDate,
+    </sql>
+    <insert id="insert" parameterType="com.example.springboot.hello.entity.Borrow">
+        INSERT INTO `borrow`(`id`,`uId`,`uName`,`bId`,`bName`,`borrowDate`,`returnDate`)
+        VALUES(#{id,jdbcType=INTEGER},#{uId,jdbcType=INTEGER},#{uName,jdbcType=VARCHAR}
+        ,#{bId,jdbcType=INTEGER},#{bName,jdbcType=VARCHAR},#{borrowDate,jdbcType=VARCHAR},#{returnDate,jdbcType=VARCHAR})
+    </insert>
+    <delete id="delete">
+        DELETE FROM borrow WHERE uId = ${uId} AND bId = ${bId}
+    </delete>
+    <select id="getList" resultMap="BaseResultMap">
+        SELECT * FROM `borrow`
+    </select>
+    <select id="getBookByUId" resultMap="BaseResultMap">
+        SELECT * FROM `borrow`WHERE uId = #{uId}
+    </select>
+    <select id="check" resultMap="BaseResultMap">
+        SELECT * FROM `borrow`WHERE uId = #{uId} and bId =#{bId}
+    </select>
+</mapper>

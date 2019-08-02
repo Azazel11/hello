@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.hello.mapper.BookMapper">
+    <resultMap id="BaseResultMap" type="com.example.springboot.hello.entity.Book">
+        <result column="bookId" jdbcType="INTEGER" property="bookId" />
+        <result column="bookType" jdbcType="VARCHAR" property="bookType"/>
+        <result column="bookName" jdbcType="VARCHAR" property="bookName" />
+        <result column="author" jdbcType="VARCHAR" property="author" />
+        <result column="publisher" jdbcType="VARCHAR" property="publisher" />
+        <result column="date" jdbcType="VARCHAR" property="date" />
+        <result column="number" jdbcType="INTEGER" property="number" />
+        <result column="totalnumber" jdbcType="INTEGER" property="totalnumber"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        bookId,bookType,bookName,author,publisher,date,number,totalnumber,price,
+    </sql>
+    <insert id="addBook" parameterType="com.example.springboot.hello.entity.Book">
+        INSERT INTO `book`(`bookId`,`bookType`,`bookName`,`author`,`publisher`,`date`,`number`,`totalnumber`,`price`)
+        VALUES (#{bookId},#{bookType},#{bookName},#{author},#{publisher},#{date},#{number},#{totalnumber},#{price})
+    </insert>
+    <select id="getBookList" resultMap="BaseResultMap">
+        SELECT *
+        FROM book
+    </select>
+    <delete id="deleteBook">
+        DELETE FROM book WHERE bookId = #{bookId,jdbcType=INTEGER}
+    </delete>
+    <update id="updateBook" parameterType="com.example.springboot.hello.entity.Book">
+        update book
+        <set>
+            <if test="bookId != null">
+                bookId = #{bookId,jdbcType=INTEGER},
+            </if>
+            <if test="bookName != null">
+                bookName = #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookType != null">
+                bookType = #{bookType,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="publisher != null">
+                publisher = #{publisher,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=INTEGER},
+            </if>
+            <if test="totalnumber != null">
+                totalnumber = #{totalnumber,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where bookName = #{bookName,jdbcType=VARCHAR}
+    </update>
+    <select id="getBookByCondition" resultMap="BaseResultMap">
+        SELECT * FROM `book`
+        <where>
+            <if test="bookName != null and bookName != ''">
+                and bookName like concat('%',#{bookName},'%')
+            </if>
+            <if test="author != null and author != ''">
+                and author like concat('%',#{author},'%')
+            </if>
+            <if test="bookId != null and bookId !=-1">
+                and bookId = #{bookId}
+            </if>
+        </where>
+    </select >
+    <select id="getBookById" resultMap="BaseResultMap">
+        SELECT * FROM `book` WHERE bookId = #{bookId}
+    </select>
+</mapper>
